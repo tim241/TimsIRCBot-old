@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Data;
+using System.Linq;
 using Microsoft.Win32;
 
 
@@ -35,30 +36,34 @@ namespace Tim_s_IRC_bot
                 }
                 else
                 {
-                    Console.WriteLine("Welcome to Tims IRC bot");
+                    Console.WriteLine("Welcome to Tims IRC bot, press enter to continue");
                     Console.ReadLine();
                     Console.WriteLine("WHich channel do you want the bot to join?");
                     string Channel = Console.ReadLine();
                     Console.WriteLine("Which nickname do you want to have?");
 
                     string Nickname = Console.ReadLine();
-                    Console.WriteLine("Which username do you have?(if none just leave blank)");
+                    Console.WriteLine("Which username do you have?(NEEDED!)");
                     string username = Console.ReadLine();
-                    if (username == " ") {
-                        username = username.Replace(" ", "TimsBot");
-
-                       
-                    }
-                    Console.WriteLine("Which password do you have for the account?(leave blank if none)");
+                    
+                    Console.WriteLine("Which password do you have for the account?(NEEDED!)");
                     string password = Console.ReadLine();
+                   
+                 
+                    
                     System.IO.Directory.CreateDirectory("/TimsBot/");
                     System.IO.Directory.CreateDirectory("/TimsBot/data");
                     System.IO.Directory.CreateDirectory("/TimsBot/data/logs/");
                     System.IO.Directory.CreateDirectory("/TimsBot/data/systems/tokensystem/");
+                    System.IO.Directory.CreateDirectory("/TimsBot/data/systems/warnsystem/");
+                    System.IO.Directory.CreateDirectory("/TimsBot/data/access/");
+                    System.IO.Directory.CreateDirectory("/TimsBot/data/access/commands/");
+                    System.IO.Directory.CreateDirectory("/TimsBot/data/access/commands/users/");
                     System.IO.File.WriteAllText(System.IO.Path.Combine(Environment.GetEnvironmentVariable("SystemDrive"), "/TimsBot/settings.ini"),"Channel=" + Channel + Environment.NewLine + "Botname=" + Nickname + Environment.NewLine + "username=" + username + Environment.NewLine + "password=" + password);
                     System.IO.File.Copy(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName, "/TimsBot/TimsBot.exe");
                     System.IO.File.Copy(System.IO.Path.Combine(Environment.CurrentDirectory , "ChatSharp.dll"), "/TimsBot/ChatSharp.dll");
                     System.IO.File.WriteAllText("/TimsBot/data/logs/log.txt", "This is the log File" + Environment.NewLine);
+                 
                     Console.Clear();
 
                     Console.WriteLine("Install successfull, start the program.");
@@ -76,7 +81,7 @@ namespace Tim_s_IRC_bot
                 
                 string readvalue = System.IO.File.ReadAllText("/TimsBot/settings.ini");
            
-                string modify1 = readvalue.Replace("Channel= ", "").Replace("Botname= ", "").Replace("username= ", "").Replace("password= ", "");
+                string modify1 = readvalue.Replace("Channel=", "").Replace("Botname=", "").Replace("username=", "").Replace("password=", "");
                 
                 string[] splitvalue = modify1.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
               
@@ -120,68 +125,134 @@ namespace Tim_s_IRC_bot
                     else if (e.PrivateMessage.Message.StartsWith("!ban "))
 
                     {
+                        if (System.IO.File.Exists("/TimsBot/data/access/commands/users/" + e.PrivateMessage.User.Nick))
+                        {
+                            var target = e.PrivateMessage.Message.Substring(5);
+                            client.WhoIs(target, whois => channel.ChangeMode("+b *!*@" + whois.User.Hostname));
+                            channel.Kick(e.PrivateMessage.Message.Substring(5));
+                            Console.WriteLine(e.PrivateMessage.Message.Substring(5) + " " + "is banned");
+                            client.SendMessage("You got banned from " + splitvalue[0], e.PrivateMessage.Message.Substring(5));
+                        }
 
-                        client.SendMessage("You got banned from the channel.", e.PrivateMessage.Message.Substring(5));
-                        var target = e.PrivateMessage.Message.Substring(5);
-                        client.WhoIs(target, whois => channel.ChangeMode("+b *!*@" + whois.User.Hostname));
-                        channel.Kick(e.PrivateMessage.Message.Substring(5));
-                        Console.WriteLine(e.PrivateMessage.Message.Substring(5) + " " + "is banned");
-                       
 
 
                     }
                     else if (e.PrivateMessage.Message.StartsWith("!unban "))
                     {
 
+                        if (System.IO.File.Exists("/TimsBot/data/access/commands/users/" + e.PrivateMessage.User.Nick))
+                        {
 
+                            var target = e.PrivateMessage.Message.Substring(7);
+                            client.WhoIs(target, whois => channel.ChangeMode("-b *!*@" + whois.User.Hostname));
+                            Console.WriteLine(e.PrivateMessage.Message.Substring(7) + " " + "is unbanned");
+                            client.SendMessage("You got unbanned from " + splitvalue[0], e.PrivateMessage.Message.Substring(7));
 
-                        var target = e.PrivateMessage.Message.Substring(7);
-                        client.WhoIs(target, whois => channel.ChangeMode("-b *!*@" + whois.User.Hostname));
-                        Console.WriteLine(e.PrivateMessage.Message.Substring(7) + " " + "is unbanned");
-                        client.SendMessage("You got unbanned from the channel.", e.PrivateMessage.Message.Substring(7));
-
-
+                        }
 
                     }
                     else if (e.PrivateMessage.Message == "!leave")
                     {
-                        channel.Part();
-                        Console.WriteLine("Bot left channel.");
+                        if (System.IO.File.Exists("/TimsBot/data/access/commands/users/" + e.PrivateMessage.User.Nick))
+                        {
+                            channel.Part();
+                            Console.WriteLine("Bot left channel.");
+                            Environment.Exit(0);
+                        }
+                    }
+                    else if (e.PrivateMessage.Message == "!cycle")
+                    {
+                        if (System.IO.File.Exists("/TimsBot/data/access/commands/users/" + e.PrivateMessage.User.Nick))
+                        {
+                            channel.Part();
+                            client.JoinChannel(splitvalue[0]);
+                            Console.WriteLine("Bot cycled channel.");
+
+                        }
                     }
                     else if (e.PrivateMessage.Message.StartsWith("!kick "))
                     {
+                        if (System.IO.File.Exists("/TimsBot/data/access/commands/users/" + e.PrivateMessage.User.Nick))
+                        {
 
 
-                      
-                        channel.Kick(e.PrivateMessage.Message.Substring(6));
-                        Console.WriteLine(e.PrivateMessage.Message.Substring(6) + " " + "is kicked");
-                        client.SendMessage("You got kicked from the channel.", e.PrivateMessage.Message.Substring(6));
-
+                            channel.Kick(e.PrivateMessage.Message.Substring(6));
+                            Console.WriteLine(e.PrivateMessage.Message.Substring(6) + " " + "is kicked");
+                            client.SendMessage("You got kicked from " + splitvalue[0], e.PrivateMessage.Message.Substring(6));
+                        }
 
 
                     }
                     else if (e.PrivateMessage.Message == "!commands")
                     {
                         channel.SendMessage("------commands-list---------");
-                        channel.SendMessage("ban, unban, kick, join, tokens, give, tokens, tokens_add.");
+                        channel.SendMessage("ban, unban, kick, join, tokens, give, tokens.");
                         channel.SendMessage("-----end-of-commands-list----");
                         Console.WriteLine("!commands requested");
                     }
                     else if (e.PrivateMessage.Message.StartsWith("!say "))
                     {
-
-                        channel.SendMessage(e.PrivateMessage.Message.Substring(5));
-
+                        if (System.IO.File.Exists("/TimsBot/data/access/commands/users/" + e.PrivateMessage.User.Nick))
+                        {
+                            channel.SendMessage(e.PrivateMessage.Message.Substring(5));
+                        }
 
 
                     }
                     else if (e.PrivateMessage.Message.StartsWith("!join "))
                     {
+                        if (System.IO.File.Exists("/TimsBot/data/access/commands/users/" + e.PrivateMessage.User.Nick))
+                        {
+                            client.JoinChannel(e.PrivateMessage.Message.Substring(5));
+                        }
 
-                        client.JoinChannel(e.PrivateMessage.Message.Substring(5));
 
+                    }
+                    else if (e.PrivateMessage.Message.StartsWith("!warn "))
+                    {
+                        if (System.IO.File.Exists("/TimsBot/data/access/commands/users/" + e.PrivateMessage.User.Nick))
+                        {
+                            if (System.IO.Directory.Exists("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6)))
+                            {
+                                if (System.IO.File.Exists("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6) + "/" + "4"))
+                                {
+                                    var target = e.PrivateMessage.Message.Substring(6);
+                                    client.WhoIs(target, whois => channel.ChangeMode("+b *!*@" + whois.User.Hostname));
+                                    channel.Kick(e.PrivateMessage.Message.Substring(6));
+                                    Console.WriteLine(e.PrivateMessage.Message.Substring(5) + " " + "is banned");
+                                    client.SendMessage("You got banned from " + splitvalue[0] + " because you keep going off topic", e.PrivateMessage.Message.Substring(6));
+                                }
+                                else
+                                {
+                                    if (System.IO.File.Exists("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6) + "/" + "3"))
+                                    {
+                                        System.IO.File.WriteAllText("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6) + "/" + "4", "Warning number 4");
+                                        channel.Kick(e.PrivateMessage.Message.Substring(6));
+                                        Console.WriteLine(e.PrivateMessage.Message.Substring(6) + " " + "is kicked");
+                                        client.SendMessage("You got kicked from " + splitvalue[0] + " because you keep going off topic", e.PrivateMessage.Message.Substring(6));
 
-
+                                    }
+                                    else
+                                    {
+                                        if (System.IO.File.Exists("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6) + "/" + "2"))
+                                        {
+                                            System.IO.File.WriteAllText("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6) + "/" + "3", "Warning number 3");
+                                            client.SendMessage("This is your last warning, please stop being off topic, you will be kicked if you go on in " + splitvalue[0], e.PrivateMessage.Message.Substring(6));
+                                        }
+                                        else
+                                        {
+                                            System.IO.File.WriteAllText("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6) + "/" + "2", "Warning number 2");
+                                            client.SendMessage("Please remember, this is a chat for chat about Galas Malatar related topics in " + splitvalue[0], e.PrivateMessage.Message.Substring(6));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            System.IO.Directory.CreateDirectory("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6));
+                            client.SendMessage("Please try and stay on topic in " + splitvalue[0], e.PrivateMessage.Message.Substring(6));
+                        }
                     }
                     else if (e.PrivateMessage.Message.StartsWith("!give "))
                     {
@@ -196,11 +267,11 @@ namespace Tim_s_IRC_bot
                             System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick, "10000");
                             goto Next;
                         }
-                       
-                        
+
+
                         Next:
-                        
-                            string value9 = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
+
+                        string value9 = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
                         string input8 = e.PrivateMessage.Message;
                         string[] words2 = input8.Split(' ');
                         if (System.IO.File.Exists("/TimsBot/data/systems/tokensystem/" + words2[1]))
@@ -214,63 +285,63 @@ namespace Tim_s_IRC_bot
                             string value2 = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + words[1]);
                             string value3 = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
                             int n = Int32.Parse(value3);
-                                if (n == 0)
-                                {
-                                    channel.SendMessage(e.PrivateMessage.User.Nick + " You have 0 Tokens!");
+                            if (n == 0)
+                            {
+                                channel.SendMessage(e.PrivateMessage.User.Nick + " You have 0 Tokens!");
 
+                            }
+                            else
+                            {
+
+                                //Create invalid nickname handler
+                                //if (client.User.Nick == (words[1]))
+                                // {
+
+
+
+                                int x = Int32.Parse(value);
+                                int y = Int32.Parse(words[2]);
+                                int u = x - y;
+                                int a = Int32.Parse(value2);
+                                int b = Int32.Parse(words[2]);
+                                int i = a + b;
+                                if (words[1] == e.PrivateMessage.User.Nick)
+
+                                {
+                                    channel.SendMessage(e.PrivateMessage.User.Nick + ", you can't give tokens to yourself!");
                                 }
+
+
                                 else
+
                                 {
 
-                                    //Create invalid nickname handler
-                                    //if (client.User.Nick == (words[1]))
-                                    // {
 
-
-
-                                    int x = Int32.Parse(value);
-                                    int y = Int32.Parse(words[2]);
-                                    int u = x - y;
-                                    int a = Int32.Parse(value2);
-                                    int b = Int32.Parse(words[2]);
-                                    int i = a + b;
-                                    if (words[1] == e.PrivateMessage.User.Nick)
+                                    System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick, "" + u);
+                                    System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + words[1], "" + i);
+                                    string value5 = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
+                                    if (value5.StartsWith("-"))
 
                                     {
-                                        channel.SendMessage(e.PrivateMessage.User.Nick + ", you can't give tokens to yourself!");
+
+                                        channel.SendMessage(e.PrivateMessage.User.Nick + " You don't have enough tokens!");
+                                        int h = x + y;
+                                        int p = a - b;
+                                        System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick, "" + h);
+                                        System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + words[1], "" + p);
+                                    }
+                                    else
+                                    {
+
+                                        channel.SendMessage("Transferred " + words[2] + " tokens from " + e.PrivateMessage.User.Nick + " to " + words[1] + "!");
+                                        string value4 = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
+                                        channel.SendMessage(e.PrivateMessage.User.Nick + " You have " + value4 + " Tokens left!");
                                     }
 
 
-                                    else
-
-                                    {
 
 
-                                        System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick, "" + u);
-                                        System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + words[1], "" + i);
-                                        string value5 = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
-                                        if (value5.StartsWith("-"))
 
-                                        {
-
-                                            channel.SendMessage(e.PrivateMessage.User.Nick + " You don't have enough tokens!");
-                                            int h = x + y;
-                                            int p = a - b;
-                                            System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick, "" + h);
-                                            System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + words[1], "" + p);
-                                        }
-                                        else
-                                        {
-
-                                            channel.SendMessage("Transferred " + words[2] + " tokens from " + e.PrivateMessage.User.Nick + " to " + words[1] + "!");
-                                            string value4 = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
-                                            channel.SendMessage(e.PrivateMessage.User.Nick + " You have " + value4 + " Tokens left!");
-                                        }
-                                    
-                                    
-                                 
-                                
-                                
                                 }
                             }
                             /// else
@@ -279,12 +350,13 @@ namespace Tim_s_IRC_bot
                                 //}
                             }
                         }
-                        else {
+                        else
+                        {
                             string value = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
                             string input2 = e.PrivateMessage.Message;
                             string[] words = input2.Split(' ');
-                          
-                            System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + words[1] , "10000");
+
+                            System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + words[1], "10000");
                             goto Again2;
                         }
 
