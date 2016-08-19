@@ -58,7 +58,7 @@ namespace Tim_s_IRC_bot
                     System.IO.Directory.CreateDirectory("/TimsBot/data");
                     System.IO.Directory.CreateDirectory("/TimsBot/data/logs/");
                     System.IO.Directory.CreateDirectory("/TimsBot/data/systems/tokensystem/");
-                    System.IO.Directory.CreateDirectory("/TimsBot/data/systems/warnsystem/");
+                    System.IO.Directory.CreateDirectory("/TimsBot/data/systems/warnsystem/warning/");
                     System.IO.Directory.CreateDirectory("/TimsBot/data/systems/warnsystem/offtopic/");
                     System.IO.Directory.CreateDirectory("/TimsBot/data/access/");
                     System.IO.Directory.CreateDirectory("/TimsBot/data/access/commands/");
@@ -286,9 +286,9 @@ namespace Tim_s_IRC_bot
                     {
                         if (System.IO.File.Exists("/TimsBot/data/access/commands/users/" + e.PrivateMessage.User.Nick))
                         {
-                            if (System.IO.Directory.Exists("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6)))
+                            if (System.IO.Directory.Exists("/TimsBot/data/systems/warnsystem/warning/" + e.PrivateMessage.Message.Substring(6)))
                             {
-                                if (System.IO.File.Exists("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6) + "/" + "4"))
+                                if (System.IO.File.Exists("/TimsBot/data/systems/warnsystem/warning/" + e.PrivateMessage.Message.Substring(6) + "/" + "4"))
                                 {
                                     var target = e.PrivateMessage.Message.Substring(6);
                                     client.WhoIs(target, whois => channel.ChangeMode("+b *!*@" + whois.User.Hostname));
@@ -299,9 +299,9 @@ namespace Tim_s_IRC_bot
                                 }
                                 else
                                 {
-                                    if (System.IO.File.Exists("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6) + "/" + "3"))
+                                    if (System.IO.File.Exists("/TimsBot/data/systems/warnsystem/warning/" + e.PrivateMessage.Message.Substring(6) + "/" + "3"))
                                     {
-                                        System.IO.File.WriteAllText("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6) + "/" + "4", "Warning number 4");
+                                        System.IO.File.WriteAllText("/TimsBot/data/systems/warnsystem/warning/" + e.PrivateMessage.Message.Substring(6) + "/" + "4", "Warning number 4");
                                         channel.Kick(e.PrivateMessage.Message.Substring(6));
                                         Console.WriteLine(e.PrivateMessage.Message.Substring(6) + " " + "is kicked");
                                         client.SendMessage("You got kicked from " + splitvalue[1] + " because you have 4 warnings, if you get one more warning you will get banned.", e.PrivateMessage.Message.Substring(6));
@@ -309,14 +309,14 @@ namespace Tim_s_IRC_bot
                                     }
                                     else
                                     {
-                                        if (System.IO.File.Exists("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6) + "/" + "2"))
+                                        if (System.IO.File.Exists("/TimsBot/data/systems/warnsystem/warning/" + e.PrivateMessage.Message.Substring(6) + "/" + "2"))
                                         {
-                                            System.IO.File.WriteAllText("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6) + "/" + "3", "Warning number 3");
+                                            System.IO.File.WriteAllText("/TimsBot/data/systems/warnsystem/warning/" + e.PrivateMessage.Message.Substring(6) + "/" + "3", "Warning number 3");
                                             client.SendMessage("Please remember, this is your 3th warning in in " + splitvalue[1], e.PrivateMessage.Message.Substring(6));
                                         }
                                         else
                                         {
-                                            System.IO.File.WriteAllText("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6) + "/" + "2", "Warning number 2");
+                                            System.IO.File.WriteAllText("/TimsBot/data/systems/warnsystem/warning/" + e.PrivateMessage.Message.Substring(6) + "/" + "2", "Warning number 2");
                                             client.SendMessage("Please remember, this is your second warning in " + splitvalue[1], e.PrivateMessage.Message.Substring(6));
                                         }
                                     }
@@ -324,7 +324,7 @@ namespace Tim_s_IRC_bot
                             }
                             else
                             {
-                                System.IO.Directory.CreateDirectory("/TimsBot/data/systems/warnsystem/" + e.PrivateMessage.Message.Substring(6));
+                                System.IO.Directory.CreateDirectory("/TimsBot/data/systems/warnsystem/warning/" + e.PrivateMessage.Message.Substring(6));
                                 client.SendMessage("Please remember, this is your first warning in " + splitvalue[1], e.PrivateMessage.Message.Substring(6));
                             }
 
