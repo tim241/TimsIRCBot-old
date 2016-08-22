@@ -43,7 +43,7 @@ If you press enter again you should get an other screen with this: <br />
 <br />
 And if you press enter again, the program will close, you are almost done with the setup. <br />
 <br />
-The program creates an desktop shortcut like you can see here: <br />
+The program creates a desktop shortcut like you can see here: <br />
 <br />
 ![alt tag](https://raw.githubusercontent.com/tim241/TimsIRCBot/master/pictures/tutorial/10.PNG) <br />
 <br />
