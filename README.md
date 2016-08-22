@@ -57,11 +57,11 @@ If you open the program by either double-clicking on the shortcut on the desktop
 <br /> 
 ![alt tag](https://raw.githubusercontent.com/tim241/TimsIRCBot/master/pictures/tutorial/13.PNG) <br />
 <br /> 
-If you right click the systemtrey icon it will give you two options: "Control Panel" and "exit, if you hoover over the icon with your mouse it will show an little balloon with "Tims IRC Bot" <br /> 
+If you right click the system tray icon it will give you two options: "Control Panel" and "exit, if you hoover over the icon with your mouse it will show an little balloon with "Tims IRC Bot" <br /> 
 <br /> 
 ![alt tag](https://raw.githubusercontent.com/tim241/TimsIRCBot/master/pictures/tutorial/14.png) <br />
 <br />
-If you click on control panel it will show an window: <br />
+If you click on control panel it will show a window: <br />
 <br />
 ![alt tag](https://raw.githubusercontent.com/tim241/TimsIRCBot/master/pictures/tutorial/15.PNG) <br />
 <br />
