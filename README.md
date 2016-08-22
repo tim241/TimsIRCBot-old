@@ -7,7 +7,7 @@ When you extracted the zip file it will look something like this: <br />
 ![alt tag](https://raw.githubusercontent.com/tim241/TimsIRCBot/master/pictures/tutorial/1.PNG) <br />
 <br />
 When you double-click the Tims IRC Bot.exe <br />
-You should get an popup: <br />
+You should get a popup: <br />
 <br />
 ![alt tag](https://raw.githubusercontent.com/tim241/TimsIRCBot/master/pictures/tutorial/2.PNG) <br />
 <br />
@@ -25,7 +25,7 @@ The second question is which channel you want to join, if you want to join ##B4A
 <br />
 ![alt tag](https://raw.githubusercontent.com/tim241/TimsIRCBot/master/pictures/tutorial/5.PNG) <br />
 <br />
-The third  question is which unickname you want to have, if you want to have Tim241 for example type: "Tim241" <br />
+The third  question is which nickname you want to have, if you want to have Tim241 for example type: "Tim241" <br />
 <br />
 ![alt tag](https://raw.githubusercontent.com/tim241/TimsIRCBot/master/pictures/tutorial/6.PNG) <br />
 <br />
