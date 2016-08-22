@@ -80,4 +80,9 @@ If you go to the IRC channel where the bot is joined, and someone with full bot 
 If you go to the IRC channel where the bot is joined, and someone without full bot access does !commands in the chat this will be the output: <br />
 <br />
 ![alt tag](https://raw.githubusercontent.com/tim241/TimsIRCBot/master/pictures/tutorial/19.PNG) <br />
-
+# About me
+Full name: Tim Wanders <br />
+Country: Netherlands <br />
+Age: 14 <br />
+Interests: Android, Linux, Windows <br />
+Youtube: https://goo.gl/0wX77y.
