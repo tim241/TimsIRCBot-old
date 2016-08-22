@@ -291,6 +291,7 @@
             this.Controls.Add(this.textBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "BotControlPanel";
+            this.ShowInTaskbar = false;
             this.Text = "Tim\'s IRC Bot ControlPanel";
             this.Load += new System.EventHandler(this.BotControlPanel_Load);
             this.ResumeLayout(false);

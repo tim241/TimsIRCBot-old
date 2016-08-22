@@ -35,9 +35,9 @@ namespace Tim_s_IRC_bot
             textBox2.Text = text;
             textBox2.Text = textBox2.Text.Replace("/TimsBot/data/access/commands/users/", "");
             string text2 = string.Join(Environment.NewLine, System.IO.Directory.GetDirectories("/TimsBot/data/systems/warnsystem/offtopic/"));
-            string text3 = string.Join(Environment.NewLine, System.IO.Directory.GetDirectories("/TimsBot/data/systems/warnsystem/warning"));
+            string text3 = string.Join(Environment.NewLine, System.IO.Directory.GetDirectories("/TimsBot/data/systems/warnsystem/warning/"));
             textBox4.Text = text2 + Environment.NewLine + text3;
-            textBox4.Text = textBox4.Text.Replace("/TimsBot/data/systems/warnsystem/offtopic/", "").Replace(@"/TimsBot/data/systems/warnsystem/warning\", "");
+            textBox4.Text = textBox4.Text.Replace("/TimsBot/data/systems/warnsystem/offtopic/", "").Replace(@"/TimsBot/data/systems/warnsystem/warning/", "");
             
         }
 

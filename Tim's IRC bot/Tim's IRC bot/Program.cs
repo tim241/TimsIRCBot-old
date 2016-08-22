@@ -188,7 +188,7 @@ namespace Tim_s_IRC_bot
 
                             channel.Kick(e.PrivateMessage.Message.Substring(6));
                             Console.WriteLine(e.PrivateMessage.Message.Substring(6) + " " + "is kicked");
-                            client.SendMessage("You got kicked from " + splitvalue[1], e.PrivateMessage.Message.Substring(6));
+                            client.SendMessage("You got kicked from " + channel, e.PrivateMessage.Message.Substring(6));
                         }
 
 
@@ -197,13 +197,13 @@ namespace Tim_s_IRC_bot
                     {
                         if (System.IO.File.Exists("/TimsBot/data/access/commands/users/" + e.PrivateMessage.User.Nick))
                         {
-                            channel.SendMessage("Commands: !ban, !unban, !kick, !join, !tokens, !give, !tokens, !warn, !warn_offtopic");
+                            channel.SendMessage("Commands: !ban, !unban, !kick, !join, !tokens, !give, !tokens, !warn, !warn_offtopic, !op, !deop");
                         }
                         else
                         {
                             channel.SendMessage("Commands: !tokens, !give.");
                         }
-                            
+
                         Console.WriteLine("!commands requested");
                     }
                     else if (e.PrivateMessage.Message.StartsWith("!say "))
@@ -370,9 +370,7 @@ namespace Tim_s_IRC_bot
                             else
                             {
 
-                                //Create invalid nickname handler
-                                //if (client.User.Nick == (words[1]))
-                                // {
+                                
 
 
 
@@ -457,9 +455,24 @@ namespace Tim_s_IRC_bot
 
 
                     }
-                 
+                    else if (e.PrivateMessage.Message == "!op")
+                    {
+                        if (System.IO.File.Exists("/TimsBot/data/systems/tokensystem//" + e.PrivateMessage.User.Nick))
+                        {
+                            var target = e.PrivateMessage.User.Nick;
+                            client.WhoIs(target, whois => channel.ChangeMode("+o  "+ e.PrivateMessage.User.Nick));
+                        }
+                    }
+                    else if (e.PrivateMessage.Message == "!deop")
+                    {
+                        if (System.IO.File.Exists("/TimsBot/data/systems/tokensystem//" + e.PrivateMessage.User.Nick))
+                        {
+                            var target = e.PrivateMessage.User.Nick;
+                            client.WhoIs(target, whois => channel.ChangeMode("-o " + e.PrivateMessage.User.Nick));
+                        }
+                    }
 
-                        client.UserJoinedChannel += (f, g) =>
+                    client.UserJoinedChannel += (f, g) =>
                     {
                         if (System.IO.File.Exists("/TimsBot/data/systems/tokensystem//" + g.User.Nick))
                         {
@@ -507,7 +520,8 @@ namespace Tim_s_IRC_bot
 
         public static void item1_Click(object sender, EventArgs e )
         {
-            
+            NotifyIcon trayIcon = new NotifyIcon();
+            trayIcon.Icon = null;
             Environment.Exit(0);
 
         }
