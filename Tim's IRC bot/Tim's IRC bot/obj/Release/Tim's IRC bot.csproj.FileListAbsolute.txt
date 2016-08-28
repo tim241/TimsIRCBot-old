@@ -15,3 +15,10 @@ C:\Users\Tim\OneDrive\Documents\Visual Studio 2015\Projects\Tim's IRC bot\Tim's 
 C:\Users\Tim\OneDrive\Documents\Visual Studio 2015\Projects\Tim's IRC bot\Tim's IRC bot\obj\Release\Tim's IRC bot.csproj.ResolveComReference.cache
 C:\Users\Tim\OneDrive\Documents\Visual Studio 2015\Projects\Tim's IRC bot\Tim's IRC bot\obj\Release\Tims IRC bot.exe
 C:\Users\Tim\OneDrive\Documents\Visual Studio 2015\Projects\Tim's IRC bot\Tim's IRC bot\obj\Release\Tims IRC bot.pdb
+C:\Users\Tim\OneDrive\Documents\Visual Studio 2015\Projects\Tim's IRC bot\Tim's IRC bot\bin\Release\Tims IRC bot.exe
+C:\Users\Tim\OneDrive\Documents\Visual Studio 2015\Projects\Tim's IRC bot\Tim's IRC bot\bin\Release\Tims IRC bot.pdb
+C:\Users\Tim\OneDrive\Documents\Visual Studio 2015\Projects\Tim's IRC bot\Tim's IRC bot\bin\Release\ChatSharp.dll
+C:\Users\Tim\OneDrive\Documents\Visual Studio 2015\Projects\Tim's IRC bot\Tim's IRC bot\bin\Release\ChatSharp.pdb
+C:\Users\Tim\OneDrive\Documents\Visual Studio 2015\Projects\Tim's IRC bot\Tim's IRC bot\obj\Release\Tim's IRC bot.csprojResolveAssemblyReference.cache
+C:\Users\Tim\OneDrive\Documents\Visual Studio 2015\Projects\Tim's IRC bot\Tim's IRC bot\obj\Release\Tim_s_IRC_bot.BotControlPanel.resources
+C:\Users\Tim\OneDrive\Documents\Visual Studio 2015\Projects\Tim's IRC bot\Tim's IRC bot\obj\Release\Tim's IRC bot.csproj.GenerateResource.Cache

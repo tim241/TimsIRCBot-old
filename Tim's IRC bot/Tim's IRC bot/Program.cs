@@ -103,7 +103,12 @@ namespace Tim_s_IRC_bot
 
                
                 var client = new IrcClient(splitvalue[0], new IrcUser(splitvalue[2], splitvalue[3], splitvalue[4]));
-                client.ConnectionComplete += (s, e) => client.JoinChannel(splitvalue[1]);
+                client.ConnectionComplete += (s, e) =>
+                {
+                    client.JoinChannel(splitvalue[1]);
+
+                };
+               
                 Console.Clear();
 
 
@@ -333,7 +338,7 @@ namespace Tim_s_IRC_bot
 
                     else if (e.PrivateMessage.Message.StartsWith("!give "))
                     {
-                        Again2:
+                    Again2:
                         if (System.IO.File.Exists("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick))
                         {
                             goto Next;
@@ -346,8 +351,8 @@ namespace Tim_s_IRC_bot
                         }
 
 
-                        Next:
-
+                    Next:
+                    
                         string value9 = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
                         string input8 = e.PrivateMessage.Message;
                         string[] words2 = input8.Split(' ');
@@ -369,62 +374,67 @@ namespace Tim_s_IRC_bot
                             }
                             else
                             {
-
-                                
-
-
-
-                                int x = Int32.Parse(value);
-                                int y = Int32.Parse(words[2]);
-                                int u = x - y;
-                                int a = Int32.Parse(value2);
-                                int b = Int32.Parse(words[2]);
-                                int i = a + b;
-                                if (words[1] == e.PrivateMessage.User.Nick)
-
+                                if (words[2].StartsWith("-"))
                                 {
-                                    channel.SendMessage(e.PrivateMessage.User.Nick + ", you can't give tokens to yourself!");
+                                    channel.SendMessage(e.PrivateMessage.User.Nick + " You can't take tokens!");
                                 }
-
-
                                 else
-
                                 {
 
 
-                                    System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick, "" + u);
-                                    System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + words[1], "" + i);
-                                    string value5 = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
-                                    if (value5.StartsWith("-"))
+
+
+                                    int x = Int32.Parse(value);
+                                    int y = Int32.Parse(words[2]);
+                                    int u = x - y;
+                                    int a = Int32.Parse(value2);
+                                    int b = Int32.Parse(words[2]);
+                                    int i = a + b;
+                                    if (words[1] == e.PrivateMessage.User.Nick)
 
                                     {
-
-                                        channel.SendMessage(e.PrivateMessage.User.Nick + " You don't have enough tokens!");
-                                        int h = x + y;
-                                        int p = a - b;
-                                        System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick, "" + h);
-                                        System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + words[1], "" + p);
+                                        channel.SendMessage(e.PrivateMessage.User.Nick + ", you can't give tokens to yourself!");
                                     }
+
+
                                     else
-                                    {
 
-                                        channel.SendMessage("Transferred " + words[2] + " tokens from " + e.PrivateMessage.User.Nick + " to " + words[1] + "!");
-                                        string value4 = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
-                                        channel.SendMessage(e.PrivateMessage.User.Nick + " You have " + value4 + " Tokens left!");
+                                    {
+                                       
+
+                                        System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick, "" + u);
+                                        System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + words[1], "" + i);
+                                        string value5 = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
+                                        if (value5.StartsWith("-"))
+
+                                        {
+
+                                            channel.SendMessage(e.PrivateMessage.User.Nick + " You don't have enough tokens!");
+                                            int h = x + y;
+                                            int p = a - b;
+                                            System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick, value);
+                                            System.IO.File.WriteAllText("/TimsBot/data/systems/tokensystem/" + words[1], value2);
+                                        }
+                                        else
+                                        {
+
+                                            channel.SendMessage("Transferred " + words[2] + " tokens from " + e.PrivateMessage.User.Nick + " to " + words[1] + "!");
+                                            string value4 = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
+                                            channel.SendMessage(e.PrivateMessage.User.Nick + " You have " + value4 + " Tokens left!");
+                                        }
+
+
                                     }
 
 
-
-
-
+                                    }
+                                }
+                                /// else
+                                {
+                                    //channel.SendMessage(e.PrivateMessage.User.Nick + " , NickName is invalid.");
+                                    //}
                                 }
                             }
-                            /// else
-                            {
-                                //channel.SendMessage(e.PrivateMessage.User.Nick + " , NickName is invalid.");
-                                //}
-                            }
-                        }
                         else
                         {
                             string value = System.IO.File.ReadAllText("/TimsBot/data/systems/tokensystem/" + e.PrivateMessage.User.Nick);
@@ -435,8 +445,9 @@ namespace Tim_s_IRC_bot
                             goto Again2;
                         }
 
-
+                        
                     }
+                   
                     else if (e.PrivateMessage.Message.StartsWith("!tokens"))
                     {
 
