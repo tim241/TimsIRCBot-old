@@ -1,0 +1,6 @@
+/home/tim/monodevelop/projects/TimsIRCBot/TimsIRCBot/obj/x86/Release/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/tim/monodevelop/projects/TimsIRCBot/TimsIRCBot/bin/Release/TimsIRCBot.exe.mdb
+/home/tim/monodevelop/projects/TimsIRCBot/TimsIRCBot/bin/Release/TimsIRCBot.exe
+/home/tim/monodevelop/projects/TimsIRCBot/TimsIRCBot/obj/x86/Release/TimsIRCBot.exe
+/home/tim/monodevelop/projects/TimsIRCBot/TimsIRCBot/obj/x86/Release/TimsIRCBot.exe.mdb
+/home/tim/monodevelop/projects/TimsIRCBot/TimsIRCBot/bin/Release/ChatSharp.dll
